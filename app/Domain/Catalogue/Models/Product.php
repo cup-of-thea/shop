@@ -2,6 +2,8 @@
 
 namespace App\Domain\Catalogue\Models;
 
+use App\Domain\Catalogue\Enums\ProductStatus;
+use App\Domain\Catalogue\Enums\ProductType;
 use App\Domain\Shared\Casts\MoneyCast;
 use Database\Factories\ProductFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,6 +19,8 @@ class Product extends Model
     {
         return [
             'price' => MoneyCast::class,
+            'type' => ProductType::class,
+            'status' => ProductStatus::class,
         ];
     }
 
