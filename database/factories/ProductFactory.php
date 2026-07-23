@@ -15,6 +15,7 @@ class ProductFactory extends Factory
         return [
             'name' => $this->faker->words(3, true),
             'description' => $this->faker->sentence(),
+            'materials' => $this->faker->words(2, true),
             'price' => Money::fromCents($this->faker->numberBetween(500, 10000)),
             'type' => 'standard',
             'status' => 'active',

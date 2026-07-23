@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
+            $table->string('materials')->nullable();
             $table->bigInteger('price');
             $table->string('type');
             $table->string('status');
