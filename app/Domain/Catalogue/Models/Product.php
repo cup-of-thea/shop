@@ -26,6 +26,11 @@ class Product extends Model
         return $this->hasMany(ProductVariant::class);
     }
 
+    public function defaultVariant(): ?ProductVariant
+    {
+        return $this->variants->firstWhere('is_default') ?? $this->variants->first();
+    }
+
     protected function casts(): array
     {
         return [
