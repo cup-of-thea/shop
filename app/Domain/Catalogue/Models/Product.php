@@ -5,6 +5,7 @@ namespace App\Domain\Catalogue\Models;
 use App\Domain\Catalogue\Enums\ProductStatus;
 use App\Domain\Catalogue\Enums\ProductType;
 use App\Domain\Shared\Casts\MoneyCast;
+use App\Domain\Shared\ValueObjects\Money;
 use Database\Factories\ProductFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -29,6 +30,19 @@ class Product extends Model
     public function defaultVariant(): ?ProductVariant
     {
         return $this->variants->firstWhere('is_default') ?? $this->variants->first();
+    }
+
+    public function options(): HasMany
+    {
+        return $this->hasMany(ProductOption::class);
+    }
+
+    public function priceWithOptions(array $selectedValuesIds): Money
+    {
+        $selectedValues = $this->options->flatMap->values->whereIn('id', $selectedValuesIds);
+
+        return $selectedValues
+            ->reduce(fn (Money $total, ProductOptionValue $value) => $total->add($value->price_modifier), $this->price)->flooredAtZero();
     }
 
     protected function casts(): array

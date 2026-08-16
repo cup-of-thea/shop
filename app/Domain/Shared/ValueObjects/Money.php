@@ -43,6 +43,11 @@ final readonly class Money
         return new self((int) round($this->cents * $percent / 100));
     }
 
+    public function flooredAtZero(): self
+    {
+        return new self(max(0, $this->cents));
+    }
+
     // Comparaisons
 
     public function equals(Money $other): bool
