@@ -3,6 +3,8 @@
 namespace App\Domain\Catalogue\Models;
 
 use App\Domain\Catalogue\Enums\ContactMethod;
+use App\Domain\Catalogue\Enums\CustomRequestStatus;
+use App\Domain\Shared\Casts\MoneyCast;
 use Database\Factories\CustomRequestFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,7 +19,10 @@ class CustomRequest extends Model
     protected function casts(): array
     {
         return [
+            'status' => CustomRequestStatus::class,
             'contact_method' => ContactMethod::class,
+            'selected_options' => 'array',
+            'estimated_price' => MoneyCast::class,
         ];
     }
 

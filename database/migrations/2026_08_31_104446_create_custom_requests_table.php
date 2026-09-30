@@ -14,9 +14,14 @@ return new class extends Migration
         Schema::create('custom_requests', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id')->nullable()->constrained()->nullOnDelete();
-            $table->string('contact_method');
-            $table->string('contact_value');
-            $table->text('message');
+            $table->string('status')->default('draft');
+            $table->unsignedTinyInteger('last_step_reached')->default(0);
+            $table->string('contact_method')->nullable();
+            $table->string('contact_value')->nullable();
+            $table->text('message')->nullable();
+            $table->json('selected_options')->nullable();
+            $table->unsignedInteger('estimated_price')->nullable();
+            $table->string('reference_image_path')->nullable();
             $table->timestamps();
         });
     }
